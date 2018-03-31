@@ -29,3 +29,23 @@ var r = arr.filter(function(x) {
     return x % 2 !== 0;
 });
 r; // [1, 5, 9, 15]
+
+
+// 函数作为返回值输出
+var x = 12;
+var obj = {
+    x: 34,
+    fun2: function() {
+        console.log(this.x, this);
+    }
+};
+var fun1 = function() {
+    return function fun2() {
+        return this.x; //若改为 return this;
+    }
+};
+obj.fun3 = fun1; // fun3就是一个函数对象，fun3的内容就是fun1的内容
+obj.fun4 = fun1(); // fun4也是一个函数对象，fun4的内容是fun1的return的结果
+console.log("输出：", obj.fun3()); //输出的内容是fun1的return的结果 一个函数对象
+console.log("输出：", obj.fun3()()); //输出this.x this指示的是window对象，因此输出12
+console.log("输出：", obj.fun4()); //输出this.x this指示的是obj对象，因此输出34
